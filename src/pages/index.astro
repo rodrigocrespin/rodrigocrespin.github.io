@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HorizontalCard from "../components/HorizontalCard.astro";
+import Skills from "../components/Skills.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const projects = (await getCollection("project")).sort((a, b) => {
+  if (!a.data.endDate && !b.data.endDate) {
+    return b.data.startDate.valueOf() - a.data.startDate.valueOf();
+  }
+  return (b.data.endDate ?? new Date()).valueOf() - (a.data.endDate ?? new Date()).valueOf();
+});
+
+const last_posts = posts.slice(0, 3);
+const last_projects = projects.slice(0, 3);
+const expFrom = 2016;
+const expYears = new Date().getFullYear() - expFrom;
+---
+
+<BaseLayout sideBarActiveItemID="home">
+  <div class="pb-8 mt-5">
+    <div class="text-xl py-1">Hi! 👋</div>
+    <div class="text-5xl font-bold">
+      I'm <span class="text-accent">Rodrigo</span>
+    </div>
+    <div class="text-3xl py-3 font-bold">Full stack developer</div>
+    <div class="py-2">
+      <text class="text-lg">
+        I have <span class="font-bold">+{expYears} years</span> of experience and good knowledge in many <span
+          class="font-bold">.NET</span
+        > & <span class="font-bold">Angular</span> projects.
+      </text>
+    </div>
+    <div class="mt-5">
+      <a class="btn" href="https://www.linkedin.com/in/rodrigocrespin" target="_blank">Let's connect!</a>
+      <a href="/about" class="btn btn-outline ml-5"> About me</a>
+    </div>
+  </div>
+
+  <Skills compact={true} />
+
+  <div>
+    <div class="text-3xl w-full font-bold mb-2">My latest projects</div>
+  </div>
+
+  {
+    last_projects.map((proj) => (
+      <>
+        <HorizontalCard
+          title={proj.data.title}
+          img={proj.data.coverImage}
+          desc={proj.data.description}
+          url={"/projects/" + proj.slug}
+          target="_self"
+          badge={proj.data.badge}
+          tags={proj.data.tags}
+        />
+        <div class="divider my-0" />
+      </>
+    ))
+  }
+</BaseLayout>

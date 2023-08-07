@@ -1,0 +1,55 @@
+---
+import { Icon } from "astro-icon";
+const { compact, showTitle = true } = Astro.props;
+const skills = [
+  { icon: "dotnetcore", name: ".NET", url: "/projects" },
+  { icon: "angular", name: "Angular", url: "/projects" },
+  { icon: "docker", name: "Docker", url: "/projects" },
+  { icon: "ngrx", name: "NgRx", url: "/projects" },
+  { icon: "rabbitmq", name: "RabbitMQ", url: "/projects" },
+  { icon: "postgresql", name: "PostgreSQL", url: "/projects" },
+  { icon: "mongodb", name: "MongoDb", url: "/projects" },
+  { icon: "firebase", name: "Firebase", url: "/projects" },
+  { icon: "azure", name: "Azure", url: "/projects" },
+  { icon: "kubernetes", name: "Kubernetes", url: "/projects" },
+  { icon: "mysql", name: "MySQL", url: "/projects" },
+  { icon: "mssql", name: "MSSQL", url: "/projects" },
+  { icon: "xunit", name: "xUnit", url: "/projects" },
+  { icon: "jest", name: "Jest", url: "/projects#" },
+  { icon: "ef", name: "EF Core", url: "/projects" },
+  { icon: "nhibernate", name: "NHibernate", url: "/projects" },
+];
+const filtered_skills = compact ? skills.slice(0, 8) : skills;
+---
+
+<div class="w-full max-w-6xl space-y-2">
+  <div class="alert relative px-6 pb-4 pt-8">
+    {
+      showTitle && (
+        <h3 class="badge badge-neutral absolute right-4 top-0 -translate-y-1/2 px-4 py-1 uppercase text-xs">Skills</h3>
+      )
+    }
+    <ul class="grid grid-cols-3 gap-8 sm:grid-cols-3 md:grid-cols-8">
+      {
+        filtered_skills.map((s) => (
+          <li>
+            <a class="flex flex-col items-center gap-2" href={s.url}>
+              <Icon class="h-12 hover:scale-110" name={s.icon} />
+              <span>{s.name}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  {
+    compact && (
+      <p class="text-right text-sm">
+        <a class="text-dark" href="/about">
+          {" "}
+          and more &rarr;
+        </a>
+      </p>
+    )
+  }
+</div>

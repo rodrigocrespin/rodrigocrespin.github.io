@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import TimeLineElement from "../components/cv/TimeLine.astro";
+import { SITE_TITLE_PREFIX } from "../config";
+import Skills from "../components/Skills.astro";
+
+const { title = SITE_TITLE_PREFIX + "About me" } = Astro.props;
+---
+
+<BaseLayout title={title} sideBarActiveItemID="about">
+  <div class="mb-5">
+    <div class="text-3xl w-full font-bold">About me</div>
+  </div>
+
+  <div class="mb-10 text-justify">
+    I'm always trying to keep on the latest technologies. My code skills let me to program clean and efficiently. I
+    enjoy investigating and learning new code skills. Passionate about my work. Proactive, responsible and capable to
+    work in teams.
+  </div>
+
+  <Skills />
+</BaseLayout>
